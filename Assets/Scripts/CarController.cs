@@ -6,8 +6,10 @@ public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentBreakForce,HandBreakForce;
-    private bool isBraking;
+    public bool isBraking;
     public bool isParking;
+
+    [SerializeField] int index;
 
     // Settings 
 
@@ -22,9 +24,25 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform backLeft, backRight;
 
 
+    private void OnEnable()
+    {
+        if (GameManager.Instance.players[index] == null)            
+        GameManager.Instance.players[index] = this.gameObject;
+        else Destroy(gameObject);
+        if (GameManager.Instance.player == null)
+        GameManager.Instance.player = this.gameObject;
+
+        this.gameObject.transform.parent = null;
+        this.gameObject.tag = "Player";
+        DontDestroyOnLoad(this.gameObject);
+
+    }
+    private void OnDisable()
+    {
+        if(GameManager.Instance.player == this.gameObject) GameManager.Instance.player = null;  
+    }
     private void Awake()
     {
-        //GameManager.instance.carController = this;
     }
     private void Start()
     {
@@ -54,7 +72,7 @@ public class CarController : MonoBehaviour
         HandBreak();
     }
 
-    private void ApplyBreaking()
+    public void ApplyBreaking()
     {
         frontRightWheel.brakeTorque = currentBreakForce;
         frontLeftWheel.brakeTorque = currentBreakForce;
@@ -92,13 +110,13 @@ public class CarController : MonoBehaviour
     private void GetInput()
     {
         // Steering Input
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = SimpleInput.GetAxis("Horizontal");
 
         // Acceleration Input
-        verticalInput = Input.GetAxis("Vertical");
+        verticalInput = SimpleInput.GetAxis("Vertical");
 
         // Break Input
-        isBraking = Input.GetKey(KeyCode.Space);
+       // isBraking = SimpleInput.GetKey(KeyCode.Space);
 
         // Park Input            
         if(Input.GetKeyDown(KeyCode.P))

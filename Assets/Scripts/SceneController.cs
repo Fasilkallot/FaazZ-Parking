@@ -1,4 +1,5 @@
 
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,7 @@ public class SceneController : MonoBehaviour
 {
     public bool onPause;
     public PauseMenuScript pauseMenu;
+    public GameObject inGameUI;
 
     private void Start()
     {
@@ -24,29 +26,39 @@ public class SceneController : MonoBehaviour
     public void Next()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        if (onPause)
-        {
-            Time.timeScale = 1.0f;
-        }
+        Time.timeScale = 1.0f;
+        inGameUI.SetActive(true);
 
     }
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        if (onPause)
-        {
-            Time.timeScale = 1.0f;
-        }
+        Time.timeScale = 1.0f;
+        inGameUI.SetActive(true);
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);      
     }
     public void QuitButton()
     {
         Application.Quit();
         Debug.Log("Quit");
     }
+    public void Park()
+    {
+        GameManager.Instance.carController.isParking = !(GameManager.Instance.carController.isParking);
+        Debug.Log("P button adich");
+    }
+    public void ApplyBreak()
+    {
+        GameManager.Instance.carController.isBraking = true;
+    }
+    public void RemoveBreak()
+    {
+        GameManager.Instance.carController.isBraking = false;
+    }
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -55,12 +67,15 @@ public class SceneController : MonoBehaviour
             {
                 pauseMenu.ActivePauseMenu();
                 onPause = true;
+                inGameUI.SetActive(true);
             }
             else
             {
                 pauseMenu.DeactivePauseMenu();
                 onPause = false;
+                inGameUI.SetActive(false);
             }
         }
     }
+    
 }

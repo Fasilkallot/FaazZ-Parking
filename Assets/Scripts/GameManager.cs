@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
         }
     }
     private static GameManager instance;
+
+    public GameObject player;
+
     public ParkTextScript parkText;
     public CarController carController;
     public WinnerMenu winnerMenu;
@@ -25,6 +28,8 @@ public class GameManager : MonoBehaviour
     public SceneController sceneController;
 
     private static bool isGameFinished = false;
+
+    public GameObject[] players = new GameObject[2];
     private void Awake()
     {
         if (instance == null)
