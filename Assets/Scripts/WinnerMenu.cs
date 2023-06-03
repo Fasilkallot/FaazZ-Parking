@@ -5,6 +5,7 @@ using UnityEngine;
 public class WinnerMenu : MonoBehaviour
 {
     [SerializeField] private GameObject effect;
+    public bool isWinner;
     void Start()
     {
         GameManager.Instance.winnerMenu = this;
@@ -13,6 +14,7 @@ public class WinnerMenu : MonoBehaviour
 
    public void WinnerPopUp()
     {
+        isWinner = true;
         gameObject.SetActive(true);
         effect.SetActive(true);
         GameManager.Instance.sceneController.inGameUI.SetActive(false);

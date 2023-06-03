@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     public GameObject player;
+    // pause taking input and return do in the room
+    public GameState currentState;
 
     public ParkTextScript parkText;
     public CarController carController;
     public WinnerMenu winnerMenu;
     public GameOverScreen gameOverScreen;
     public SceneController sceneController;
+    public PlayerFollow followCamera;
 
     private static bool isGameFinished = false;
 
@@ -43,6 +46,10 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    private void Start()
+    {
+        currentState = GameState.PauseState;
+    }
 
     public void CarInside()
     {
@@ -50,6 +57,7 @@ public class GameManager : MonoBehaviour
         if(carController.isParking)
         {
             winnerMenu.WinnerPopUp();
+            followCamera.camera.enabled = false;
         }
 
     }
@@ -63,4 +71,14 @@ public class GameManager : MonoBehaviour
     {
         if(GameManager.Instance == this) isGameFinished = true;
     }
+    private void UpdateState(GameState newState)
+    {
+        
+    }
+}
+public enum GameState
+{
+    PalayingState,
+    PauseState
+
 }

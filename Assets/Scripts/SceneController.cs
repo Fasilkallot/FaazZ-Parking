@@ -15,7 +15,9 @@ public class SceneController : MonoBehaviour
     }
     public void Play()
     {
+        DontDestroyOnLoad(GameManager.Instance.player);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.currentState = GameState.PalayingState;
         Time.timeScale = 1.0f;
     }
     public void Quit()
@@ -26,6 +28,7 @@ public class SceneController : MonoBehaviour
     public void Next()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.currentState = GameState.PalayingState;
         Time.timeScale = 1.0f;
         inGameUI.SetActive(true);
 
@@ -33,22 +36,25 @@ public class SceneController : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.currentState = GameState.PalayingState;
+        GameManager.Instance.carController.CarToIdle();
         Time.timeScale = 1.0f;
         inGameUI.SetActive(true);
     }
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);      
+        Destroy(GameManager.Instance.player);
+        SceneManager.LoadScene(0);
+        GameManager.Instance.currentState = GameState.PauseState;
+
     }
     public void QuitButton()
     {
         Application.Quit();
-        Debug.Log("Quit");
     }
     public void Park()
     {
         GameManager.Instance.carController.isParking = !(GameManager.Instance.carController.isParking);
-        Debug.Log("P button adich");
     }
     public void ApplyBreak()
     {
@@ -63,17 +69,17 @@ public class SceneController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!onPause)
+            if (!onPause && (!GameManager.Instance.winnerMenu.isWinner && !GameManager.Instance.gameOverScreen.gameOver) )
             {
                 pauseMenu.ActivePauseMenu();
                 onPause = true;
-                inGameUI.SetActive(true);
+                inGameUI.SetActive(false);
             }
             else
             {
                 pauseMenu.DeactivePauseMenu();
                 onPause = false;
-                inGameUI.SetActive(false);
+                inGameUI.SetActive(true);
             }
         }
     }

@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -8,6 +9,8 @@ public class CarController : MonoBehaviour
     private float currentSteerAngle, currentBreakForce,HandBreakForce;
     public bool isBraking;
     public bool isParking;
+
+    Rigidbody carRb;
 
     [SerializeField] int index;
 
@@ -32,26 +35,26 @@ public class CarController : MonoBehaviour
         if (GameManager.Instance.player == null)
         GameManager.Instance.player = this.gameObject;
 
-        this.gameObject.transform.parent = null;
+        //this.gameObject.transform.parent = null;
         this.gameObject.tag = "Player";
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
 
     }
     private void OnDisable()
     {
-        if(GameManager.Instance.player == this.gameObject) GameManager.Instance.player = null;  
+        this.gameObject.transform.parent = null;
+        if (GameManager.Instance.player == this.gameObject) GameManager.Instance.player = null;
     }
-    private void Awake()
-    {
-    }
+
     private void Start()
     {
         GameManager.Instance.carController = this;
+        carRb = GetComponent<Rigidbody>();
     }
+    // update called in every frame
     private void Update()
     {
-
-        GetInput();
+        if(GameManager.Instance.currentState == GameState.PalayingState) GetInput();
     }
     private void FixedUpdate()
     {
@@ -72,7 +75,7 @@ public class CarController : MonoBehaviour
         HandBreak();
     }
 
-    public void ApplyBreaking()
+    private void ApplyBreaking()
     {
         frontRightWheel.brakeTorque = currentBreakForce;
         frontLeftWheel.brakeTorque = currentBreakForce;
@@ -116,7 +119,7 @@ public class CarController : MonoBehaviour
         verticalInput = SimpleInput.GetAxis("Vertical");
 
         // Break Input
-       // isBraking = SimpleInput.GetKey(KeyCode.Space);
+        isBraking = SimpleInput.GetKey(KeyCode.Space);
 
         // Park Input            
         if(Input.GetKeyDown(KeyCode.P))
@@ -131,6 +134,15 @@ public class CarController : MonoBehaviour
         rearLeftWheel.brakeTorque = HandBreakForce;
         rearRightWheel.brakeTorque = HandBreakForce;
     }
+
+    public void CarToIdle()
+    {
+        isParking = true;
+        currentSteerAngle = 0f;
+        carRb.velocity = Vector3.zero;
+    }
+
+
     
 
 }
