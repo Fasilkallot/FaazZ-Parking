@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class GameManager : MonoBehaviour
     }
     private static GameManager instance;
 
-    public GameObject player;
+    public Action<GameState> OnStateChangeAction;
     // pause taking input and return do in the room
     public GameState currentState;
 
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     private static bool isGameFinished = false;
 
     public GameObject current_Player;
+    public int currentLevel;
     private void Awake()
     {
         if (instance == null)
@@ -49,18 +52,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         currentState = GameState.PauseState;
+        currentLevel = PlayerPrefs.GetInt("leveUnlocked");
     }
-
-    public void CarInside()
+    public void LevelCompleted()
     {
-        parkText.ActiveText();
-        if(carController.isParking)
+        if (currentLevel < 10)
         {
-            winnerMenu.WinnerPopUp();
-            followCamera.camera.enabled = false;
+            int nextLevel = currentLevel + 1;
+            PlayerPrefs.SetInt("leveUnlocked", nextLevel);
         }
-
     }
+
+
 
     public void GameOver()
     {
@@ -71,14 +74,16 @@ public class GameManager : MonoBehaviour
     {
         if(GameManager.Instance == this) isGameFinished = true;
     }
-    private void UpdateState(GameState newState)
+    public void OnStateChange(GameState state)
     {
-        
+        currentState = state;
+        OnStateChangeAction?.Invoke(currentState);
     }
-}
-public enum GameState
-{
-    PalayingState,
-    PauseState
 
+}
+
+public enum GameState
+{    
+    PauseState,
+    PalayingState
 }

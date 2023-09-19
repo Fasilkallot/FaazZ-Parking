@@ -13,21 +13,22 @@ public class SceneController : MonoBehaviour
     {
         GameManager.Instance.sceneController = this;
     }
-    public void Play()
+    public void Play(int level)
     {
+        GameManager.Instance.currentLevel = level;
         DontDestroyOnLoad(GameManager.Instance.current_Player);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(level);
         GameManager.Instance.currentState = GameState.PalayingState;
         Time.timeScale = 1.0f;
     }
     public void Quit()
     {
-        Debug.Log("Quit");
         Application.Quit();
     }
     public void Next()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameManager.Instance.currentLevel = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(GameManager.Instance.currentLevel);
         GameManager.Instance.currentState = GameState.PalayingState;
         Time.timeScale = 1.0f;
         inGameUI.SetActive(true);
@@ -43,7 +44,7 @@ public class SceneController : MonoBehaviour
     }
     public void MainMenu()
     {
-        Destroy(GameManager.Instance.player);
+        Destroy(GameManager.Instance.current_Player);
         SceneManager.LoadScene(0);
         GameManager.Instance.currentState = GameState.PauseState;
 
@@ -64,24 +65,8 @@ public class SceneController : MonoBehaviour
     {
         GameManager.Instance.carController.isBraking = false;
     }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!onPause && (!GameManager.Instance.winnerMenu.isWinner && !GameManager.Instance.gameOverScreen.gameOver) )
-            {
-                pauseMenu?.ActivePauseMenu();
-                onPause = true;
-                inGameUI?.SetActive(false);
-            }
-            else
-            {
-                pauseMenu?.DeactivePauseMenu();
-                onPause = false;
-                inGameUI?.SetActive(true);
-            }
-        }
-    }
     
+
+
+
 }

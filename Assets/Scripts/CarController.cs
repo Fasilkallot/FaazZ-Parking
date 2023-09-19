@@ -6,11 +6,12 @@ using UnityEngine.Experimental.Rendering;
 public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
-    private float currentSteerAngle, currentBreakForce,HandBreakForce;
+    private float currentSteerAngle, currentBreakForce, HandBreakForce;
     public bool isBraking;
     public bool isParking;
 
     Rigidbody carRb;
+    [SerializeField] private Material breakLightMaterial;
 
     [SerializeField] int index;
 
@@ -26,24 +27,21 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontLeft, frontRight;
     [SerializeField] private Transform backLeft, backRight;
 
+    public ScriptableObject carSpec {  get; private set; }
+
 
     private void OnEnable()
     {
-       /* if (GameManager.Instance.players[index] == null)            
-        GameManager.Instance.players[index] = this.gameObject;
-        else Destroy(gameObject);
-        if (GameManager.Instance.player == null)
-        GameManager.Instance.player = this.gameObject;*/
+      
 
-        //this.gameObject.transform.parent = null;
+        this.gameObject.transform.parent = null;
         this.gameObject.tag = "Player";
-        //DontDestroyOnLoad(this.gameObject);
 
     }
     private void OnDisable()
     {
         this.gameObject.transform.parent = null;
-        if (GameManager.Instance.current_Player == this.gameObject) GameManager.Instance.current_Player = null;
+        if (GameManager.Instance?.current_Player == this.gameObject) GameManager.Instance.current_Player = null;
     }
 
     private void Start()
@@ -68,8 +66,22 @@ public class CarController : MonoBehaviour
         frontLeftWheel.motorTorque = verticalInput * motorForce;
         frontRightWheel.motorTorque = verticalInput *motorForce;
 
-        currentBreakForce = isBraking ? breakForce :0f;
-        HandBreakForce = isParking ? parkForce :0f;
+        if (isBraking)
+        {
+            currentBreakForce = breakForce;
+            breakLightMaterial.EnableKeyword("_EMISSION");
+        }
+        else if (isParking)
+        {
+            HandBreakForce = breakForce;
+            breakLightMaterial.EnableKeyword("_EMISSION");
+        }
+        else
+        {
+            currentBreakForce = HandBreakForce = 0f;
+            breakLightMaterial.DisableKeyword("_EMISSION");
+        }
+        //HandBreakForce = isParking ? parkForce :0f;
 
         ApplyBreaking();
         HandBreak();
@@ -110,7 +122,7 @@ public class CarController : MonoBehaviour
         frontLeftWheel.steerAngle = currentSteerAngle;
     }
 
-    private void GetInput()
+    public void GetInput()
     {
         // Steering Input
         horizontalInput = SimpleInput.GetAxis("Horizontal");
@@ -141,8 +153,4 @@ public class CarController : MonoBehaviour
         currentSteerAngle = 0f;
         carRb.velocity = Vector3.zero;
     }
-
-
-    
-
 }

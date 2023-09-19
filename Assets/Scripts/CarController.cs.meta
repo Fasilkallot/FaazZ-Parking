@@ -3,7 +3,17 @@ guid: ae8d2cfa5889f6349a127b88727b8304
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - breakLightMaterial: {fileID: 2100000, guid: 445fc4f76c20a8d4f87984a2454c5334,
+      type: 2}
+  - frontLeftWheel: {instanceID: 0}
+  - frontRightWheel: {instanceID: 0}
+  - rearLeftWheel: {instanceID: 0}
+  - rearRightWheel: {instanceID: 0}
+  - frontLeft: {instanceID: 0}
+  - frontRight: {instanceID: 0}
+  - backLeft: {instanceID: 0}
+  - backRight: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

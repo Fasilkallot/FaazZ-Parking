@@ -1,11 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CarCollision : MonoBehaviour
 {
+    public static Action gotHit;
+
+
     private void OnCollisionEnter(Collision collision)
     {
-        GameManager.Instance.gameOverScreen.GameOverScreenPopUp();
+        gotHit?.Invoke();
     }
+    
 }

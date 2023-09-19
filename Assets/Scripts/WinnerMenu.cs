@@ -1,30 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class WinnerMenu : MonoBehaviour
 {
     [SerializeField] private GameObject effect;
+    [SerializeField] private GameObject winnerMenu;
     public bool isWinner;
+    private ParkingScript parkingScript;
     void Start()
     {
         GameManager.Instance.winnerMenu = this;
-        gameObject.SetActive(false);
     }
 
    public void WinnerPopUp()
     {
         isWinner = true;
-        gameObject.SetActive(true);
+        winnerMenu.SetActive(true);
         effect.SetActive(true);
         GameManager.Instance.sceneController.inGameUI.SetActive(false);
 
     }
     public void WinnerClose()
     {
-        gameObject.SetActive(false);
+        winnerMenu.SetActive(false);
         effect.SetActive(false);
         GameManager.Instance.sceneController.inGameUI.SetActive(true);
+
+    }
+    private void OnEnable()
+    {
+        ParkingScript.GameWinner += CarInside;
+    }
+    private void OnDisable()
+    {
+        ParkingScript.GameWinner -= CarInside;
+    }
+    public void CarInside()
+    {
+        GameManager.Instance.parkText.ActiveText();
+        if (GameManager.Instance.carController.isParking)
+        {
+            WinnerPopUp();
+            GameManager.Instance.LevelCompleted();
+        }
 
     }
 }

@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.current_Player = cars[carIndex];
         GameManager.Instance?.current_Player?.transform.SetPositionAndRotation(carPosition.position, carPosition.rotation);
         
     }

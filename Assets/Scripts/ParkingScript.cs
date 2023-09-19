@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class ParkingScript : MonoBehaviour
 {
     [SerializeField] private Transform parkingPointTransform;
     [SerializeField] private float area = 2f;
+
+    public static event Action GameWinner;
 
     private Transform carPoint;
     
@@ -34,7 +37,7 @@ public class ParkingScript : MonoBehaviour
 
         if (math.abs(dotProduct)>= 0.8 && distance < area )
         {
-            GameManager.Instance.CarInside();
+            GameWinner?.Invoke();
         }
     }
 }
