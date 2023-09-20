@@ -47,23 +47,26 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
     private void Start()
     {
         currentState = GameState.PauseState;
         currentLevel = PlayerPrefs.GetInt("leveUnlocked");
+        if (!PlayerPrefs.HasKey("CollectedCoins")) PlayerPrefs.SetInt("CollectedCoins", 0);
     }
     public void LevelCompleted()
     {
+       
+        bool coinadded = false;
+        int currentCoins = PlayerPrefs.GetInt("CollectedCoins");
+        int addCoin = currentCoins + (currentLevel * 100);
+        PlayerPrefs.SetInt("CollectedCoins", addCoin);
         if (currentLevel < 10)
         {
             int nextLevel = currentLevel + 1;
             PlayerPrefs.SetInt("leveUnlocked", nextLevel);
-        }
+        }    
     }
-
-
 
     public void GameOver()
     {

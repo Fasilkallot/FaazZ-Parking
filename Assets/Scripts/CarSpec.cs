@@ -7,5 +7,5 @@ public class CarSpec : ScriptableObject
     public string carName;
     public float power;
     public float torque;
-    public float Maxspeed;
+    public float maxSpeed;
 }

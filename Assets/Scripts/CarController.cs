@@ -7,8 +7,11 @@ public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentBreakForce, HandBreakForce;
+    public float torque, power, maxSpeed;
+    public string carName;
     public bool isBraking;
     public bool isParking;
+    
 
     Rigidbody carRb;
     [SerializeField] private Material breakLightMaterial;
@@ -27,7 +30,7 @@ public class CarController : MonoBehaviour
     [SerializeField] private Transform frontLeft, frontRight;
     [SerializeField] private Transform backLeft, backRight;
 
-    public ScriptableObject carSpec {  get; private set; }
+    [SerializeField] private CarSpec carSpec;
 
 
     private void OnEnable()
@@ -42,6 +45,13 @@ public class CarController : MonoBehaviour
     {
         this.gameObject.transform.parent = null;
         if (GameManager.Instance?.current_Player == this.gameObject) GameManager.Instance.current_Player = null;
+    }
+    private void Awake()
+    {
+        carName = carSpec.carName;
+        torque = carSpec.torque;
+        power = carSpec.power;
+        maxSpeed = carSpec.maxSpeed;
     }
 
     private void Start()

@@ -1200,6 +1200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8d2cfa5889f6349a127b88727b8304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  torque: 0
+  power: 0
+  maxSpeed: 0
+  carName: 
   isBraking: 0
   isParking: 0
   breakLightMaterial: {fileID: 2100000, guid: 445fc4f76c20a8d4f87984a2454c5334, type: 2}
@@ -1216,6 +1220,7 @@ MonoBehaviour:
   frontRight: {fileID: 1884330680451696916}
   backLeft: {fileID: 1884330680667968512}
   backRight: {fileID: 1884330681004635491}
+  carSpec: {fileID: 11400000, guid: 20f509a8a866d714e870c99ba274c751, type: 2}
 --- !u!114 &4899339394121875644
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,4 +15,4 @@ MonoBehaviour:
   carName: Orange
   power: 118.41
   torque: 172
-  Maxspeed: 120
+  maxSpeed: 190

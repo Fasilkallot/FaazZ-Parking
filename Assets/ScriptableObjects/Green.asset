@@ -15,4 +15,4 @@ MonoBehaviour:
   carName: Green
   power: 133.25
   torque: 185
-  Maxspeed: 135
+  maxSpeed: 210

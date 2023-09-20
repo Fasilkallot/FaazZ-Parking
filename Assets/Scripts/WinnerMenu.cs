@@ -35,13 +35,15 @@ public class WinnerMenu : MonoBehaviour
     {
         ParkingScript.GameWinner -= CarInside;
     }
-    public void CarInside()
+    public void CarInside(GameObject parkArea)
     {
         GameManager.Instance.parkText.ActiveText();
         if (GameManager.Instance.carController.isParking)
         {
-            WinnerPopUp();
+            parkArea.GetComponent<MeshRenderer>().material.color = Color.green;
+            parkArea.GetComponent<BoxCollider>().enabled = false;   
             GameManager.Instance.LevelCompleted();
+            WinnerPopUp();
         }
 
     }
