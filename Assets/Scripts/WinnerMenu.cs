@@ -40,7 +40,6 @@ public class WinnerMenu : MonoBehaviour
         GameManager.Instance.parkText.ActiveText();
         if (GameManager.Instance.carController.isParking)
         {
-            parkArea.GetComponent<MeshRenderer>().material.color = Color.green;
             parkArea.GetComponent<BoxCollider>().enabled = false;   
             GameManager.Instance.LevelCompleted();
             WinnerPopUp();

@@ -35,9 +35,15 @@ public class ParkingScript : MonoBehaviour
         float dotProduct = Vector3.Dot(carForward, parkingPointForward);
         float distance = Vector3.Distance(parkingPointTransform.position, carPoint.position);
 
-        if (math.abs(dotProduct)>= 0.8 && distance < area )
+        if (math.abs(dotProduct) >= 0.8 && distance < area)
         {
+            gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
             GameWinner?.Invoke(this.gameObject);
+        }
+        else
+        {
+            gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
+
         }
     }
 }
