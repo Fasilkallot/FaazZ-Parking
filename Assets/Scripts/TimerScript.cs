@@ -7,17 +7,17 @@ public class TimerScript : MonoBehaviour
 {
     public float timeRemaining = 60f; 
     public TextMeshProUGUI timerText; 
-
-    private bool timerRunning = false; 
+    public bool timerRunning = false; 
 
     void Start()
     {
+        GameManager.Instance.time = this;
         timerRunning = true; 
     }
 
     void Update()
     {
-        if (timerRunning)
+        if (timerRunning && GameManager.Instance.currentState == GameState.PalayingState)
         {
             
             timeRemaining -= Time.deltaTime;

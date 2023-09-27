@@ -13,12 +13,11 @@ public class GameOverScreen : MonoBehaviour
     }
     public void GameOverScreenPopUp()
     {
-        gameOver = true;
-        gameOverScreen.SetActive(true);
-        GameManager.Instance.sceneController.inGameUI.SetActive(false);
-        if (!GameManager.Instance.sceneController.onPause)
+        if (!(GameManager.Instance.currentState == GameState.PauseState))
         {
-            GameManager.Instance.sceneController.onPause = true;
+            gameOver = true;
+            gameOverScreen.SetActive(true);
+            GameManager.Instance.currentState = GameState.PauseState;
             Time.timeScale = 0f;
         }
     }

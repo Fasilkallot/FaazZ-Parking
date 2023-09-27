@@ -16,3 +16,4 @@ MonoBehaviour:
   power: 133.25
   torque: 185
   maxSpeed: 210
+  carCost: 500

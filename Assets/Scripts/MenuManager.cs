@@ -1,10 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    public static Action<GameObject> CarChange;
+    public static event Action<GameObject> CarChange;
 
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject modeMoenu;
     [SerializeField] Transform carPosition;
     [SerializeField] GameObject[] cars;
     int carIndex = 0;
@@ -13,14 +16,12 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.Instance.current_Player = cars[carIndex];
         GameManager.Instance?.current_Player?.transform.SetPositionAndRotation(carPosition.position, carPosition.rotation);
-        
     }
     private void Start()
     {
         cars[carIndex].gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         GameManager.Instance.current_Player = cars[carIndex];
-        CarChange?.Invoke(cars[carIndex]);
     }
 
     public void PrevButton()
@@ -39,6 +40,13 @@ public class MenuManager : MonoBehaviour
         cars[carIndex].SetActive(true);
         CarChange?.Invoke(cars[carIndex]);
         GameManager.Instance.current_Player = cars[carIndex];
-
+    }
+    public void PlayButton()
+    {
+        if (cars[carIndex].GetComponent<CarController>().isUnlocked)
+        {
+            mainMenu.SetActive(false);
+            modeMoenu.SetActive(true);
+        }
     }
 }

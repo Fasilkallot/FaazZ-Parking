@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameOverScreen gameOverScreen;
     public SceneController sceneController;
     public PlayerFollow followCamera;
+    public TimerScript time;
 
     private static bool isGameFinished = false;
 
@@ -53,14 +54,16 @@ public class GameManager : MonoBehaviour
         currentState = GameState.PauseState;
         currentLevel = PlayerPrefs.GetInt("leveUnlocked");
         if (!PlayerPrefs.HasKey("CollectedCoins")) PlayerPrefs.SetInt("CollectedCoins", 0);
+        PlayerPrefs.SetInt("Orange", 1);
     }
     public void LevelCompleted()
     {
-       
-        bool coinadded = false;
+        time.timerRunning = false;
         int currentCoins = PlayerPrefs.GetInt("CollectedCoins");
-        int addCoin = currentCoins + (currentLevel * 100);
-        PlayerPrefs.SetInt("CollectedCoins", addCoin);
+        int coinsGain = currentLevel * 100;
+        winnerMenu.coinGain.text = coinsGain.ToString();
+        currentCoins = currentCoins + coinsGain;
+        PlayerPrefs.SetInt("CollectedCoins", currentCoins);
         if (currentLevel < 10)
         {
             int nextLevel = currentLevel + 1;

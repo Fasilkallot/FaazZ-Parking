@@ -9,8 +9,10 @@ public class CarController : MonoBehaviour
     private float currentSteerAngle, currentBreakForce, HandBreakForce;
     public float torque, power, maxSpeed;
     public string carName;
+    public int carCost;
     public bool isBraking;
     public bool isParking;
+    public bool isUnlocked;
     
 
     Rigidbody carRb;
@@ -35,11 +37,9 @@ public class CarController : MonoBehaviour
 
     private void OnEnable()
     {
-      
-
         this.gameObject.transform.parent = null;
         this.gameObject.tag = "Player";
-
+        isUnlocked = carSpec.isUnlocked == 0 ? false : true;
     }
     private void OnDisable()
     {
@@ -52,6 +52,7 @@ public class CarController : MonoBehaviour
         torque = carSpec.torque;
         power = carSpec.power;
         maxSpeed = carSpec.maxSpeed;
+        carCost = carSpec.carCost;
     }
 
     private void Start()
@@ -144,8 +145,10 @@ public class CarController : MonoBehaviour
         isBraking = SimpleInput.GetKey(KeyCode.Space);
 
         // Park Input            
-        if(Input.GetKeyDown(KeyCode.P))
-            isParking = !isParking;       
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            isParking = !isParking;
+        }
     }
     private void HandBreak()
     {

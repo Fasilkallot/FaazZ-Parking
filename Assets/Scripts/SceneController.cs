@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public bool onPause;
+    //public bool onPause;
     public PauseMenuScript pauseMenu;
-    public GameObject inGameUI;
 
     private void Start()
     {
@@ -15,6 +14,7 @@ public class SceneController : MonoBehaviour
     }
     public void Play(int level)
     {
+        if (!GameManager.Instance.current_Player.GetComponent<CarController>().isUnlocked) return;
         GameManager.Instance.currentLevel = level;
         DontDestroyOnLoad(GameManager.Instance.current_Player);
         SceneManager.LoadScene(level);
@@ -31,7 +31,6 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(GameManager.Instance.currentLevel);
         GameManager.Instance.currentState = GameState.PalayingState;
         Time.timeScale = 1.0f;
-        inGameUI.SetActive(true);
 
     }
     public void Restart()
@@ -40,7 +39,6 @@ public class SceneController : MonoBehaviour
         GameManager.Instance.currentState = GameState.PalayingState;
         GameManager.Instance.carController.CarToIdle();
         Time.timeScale = 1.0f;
-        inGameUI.SetActive(true);
     }
     public void MainMenu()
     {
