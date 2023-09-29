@@ -61803,7 +61803,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wayPoints:
   - {fileID: 1002448358}
-  minDistance: 1.5
 --- !u!120 &1370170602
 LineRenderer:
   serializedVersion: 2
@@ -65601,7 +65600,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.8333333
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: fa3a63d3678e11a4f9a414674353900b, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 5fb42fcd088d82d43bfe93aafd21ac4d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1471512917
 Transform:
@@ -71139,6 +71138,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 0}
   sceneController: {fileID: 0}
   followCamera: {fileID: 0}
+  time: {fileID: 0}
   current_Player: {fileID: 0}
   currentLevel: 0
 --- !u!1001 &1607452035
