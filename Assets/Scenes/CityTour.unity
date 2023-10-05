@@ -100753,6 +100753,46 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606107, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 832
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_text
+      value: Press 'P' to change Park & Drive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 4096
+      objectReference: {fileID: 0}
+    - target: {fileID: 6604678027873606108, guid: 16f6f2e2f0c091e49b71884627c9299d,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6604678028263869474, guid: 16f6f2e2f0c091e49b71884627c9299d,
         type: 3}
       propertyPath: m_AnchorMax.y
