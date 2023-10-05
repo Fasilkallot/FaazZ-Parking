@@ -49,4 +49,9 @@ public class MenuManager : MonoBehaviour
             modeMoenu.SetActive(true);
         }
     }
+    public void ClearPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("Orange", 1);
+    }
 }

@@ -1,5 +1,6 @@
 using System;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ParkingScript : MonoBehaviour
@@ -7,8 +8,7 @@ public class ParkingScript : MonoBehaviour
     [SerializeField] private Transform parkingPointTransform;
     [SerializeField] private float area = 2f;
 
-    public static event Action<GameObject> GameWinner;
-
+    private Material parkingAreaMaterial;
     private Transform carPoint;
     
   
@@ -24,10 +24,7 @@ public class ParkingScript : MonoBehaviour
             checkParked();
         }
     }
-
-  
-
-    private void checkParked()
+    private async void checkParked()
     {
         Vector3 carForward = carPoint.forward;
         Vector3 parkingPointForward = parkingPointTransform.forward;
@@ -37,13 +34,23 @@ public class ParkingScript : MonoBehaviour
 
         if (math.abs(dotProduct) >= 0.8 && distance < area)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-            GameWinner?.Invoke(this.gameObject);
+            parkingAreaMaterial.color = Color.green;
+            GameManager.Instance.parkText.ActiveText();
+
+            if (GameManager.Instance.current_Player.GetComponent<CarController>().isParking)
+            {
+                this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                GameManager.Instance.LevelCompleted();
+                GameManager.Instance.winnerMenu.WinnerPopUp();
+            }
         }
         else
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
-
+            parkingAreaMaterial.color = Color.yellow;
         }
+    }
+    private void Awake()
+    {
+        parkingAreaMaterial = this.gameObject.GetComponent<MeshRenderer>().material;
     }
 }

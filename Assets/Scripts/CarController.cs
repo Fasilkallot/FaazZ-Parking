@@ -40,11 +40,12 @@ public class CarController : MonoBehaviour
         this.gameObject.transform.parent = null;
         this.gameObject.tag = "Player";
         isUnlocked = carSpec.isUnlocked == 0 ? false : true;
+        isParking = true;
     }
     private void OnDisable()
     {
         this.gameObject.transform.parent = null;
-        if (GameManager.Instance?.current_Player == this.gameObject) GameManager.Instance.current_Player = null;
+        //if (GameManager.Instance?.current_Player == this.gameObject) GameManager.Instance.current_Player = null;
     }
     private void Awake()
     {
@@ -136,13 +137,13 @@ public class CarController : MonoBehaviour
     public void GetInput()
     {
         // Steering Input
-        horizontalInput = SimpleInput.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis("Horizontal");
 
         // Acceleration Input
-        verticalInput = SimpleInput.GetAxis("Vertical");
+        verticalInput = Input.GetAxis("Vertical");
 
         // Break Input
-        isBraking = SimpleInput.GetKey(KeyCode.Space);
+        isBraking = Input.GetKey(KeyCode.Space);
 
         // Park Input            
         if (Input.GetKeyDown(KeyCode.P))
@@ -164,6 +165,9 @@ public class CarController : MonoBehaviour
     {
         isParking = true;
         currentSteerAngle = 0f;
-        carRb.velocity = Vector3.zero;
+        if(carRb != null)
+        {
+            carRb.velocity = Vector3.zero;
+        }
     }
 }

@@ -1,45 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class CarSound : MonoBehaviour
 {
-    public float minSpeed;
-    public float maxSpeed;
-    private float currentSpeed;
-
-    private Rigidbody carRb;
+    private Rigidbody carRigidbody;
     private AudioSource carAudio;
 
-    public float minPitch;
-    public float maxPitch;
-    private float pitchFromCar;
+    public float minSpeed = 0.0f;
+    public float maxSpeed = 100.0f;
 
-     void Start()
+    public float minPitch = 0.5f;
+    public float maxPitch = 1.5f;
+
+    private void Start()
     {
-        carRb = GetComponent<Rigidbody>();
+        carRigidbody = GetComponent<Rigidbody>();
         carAudio = GetComponent<AudioSource>();
-    }
-     void EngineSound()
-    {
-        currentSpeed = carRb.velocity.magnitude;
-        pitchFromCar = carRb.velocity.magnitude / 20f;
 
-        if(currentSpeed < minSpeed)
-        {
-            carAudio.pitch = minPitch;
-        }
-        if(currentSpeed >minSpeed && currentSpeed < maxSpeed)
-        {
-            carAudio.pitch = minPitch + pitchFromCar;
-        }
-        if(currentSpeed > maxSpeed)
-        {
-            carAudio.pitch = maxPitch;
-        }
+        // Make sure the audio loops.
+        carAudio.loop = true;
     }
+
     private void Update()
     {
-        EngineSound();
+        if (GameManager.Instance.currentState == GameState.PalayingState)
+        {
+            float currentSpeed = carRigidbody.velocity.magnitude;
+
+            // Calculate the pitch based on the current speed.
+            float speedPercentage = Mathf.InverseLerp(minSpeed, maxSpeed, currentSpeed);
+            float pitch = Mathf.Lerp(minPitch, maxPitch, speedPercentage);
+
+            carAudio.pitch = pitch;
+
+            if (!carAudio.isPlaying)
+            {
+                carAudio.Play();
+            }
+        }
+        else
+        {
+            carAudio.Stop();
+        }
     }
 }

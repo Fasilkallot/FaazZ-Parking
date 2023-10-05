@@ -14,7 +14,7 @@ MonoImporter:
   - frontRight: {instanceID: 0}
   - backLeft: {instanceID: 0}
   - backRight: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: -1
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

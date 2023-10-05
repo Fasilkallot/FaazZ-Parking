@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         private set
         {
             instance = value;
-        }
+        }       
     }
     private static GameManager instance;
 
@@ -85,7 +85,6 @@ public class GameManager : MonoBehaviour
         currentState = state;
         OnStateChangeAction?.Invoke(currentState);
     }
-
 }
 
 public enum GameState

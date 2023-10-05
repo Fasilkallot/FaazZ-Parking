@@ -28,23 +28,5 @@ public class WinnerMenu : MonoBehaviour
         effect.SetActive(false);
 
     }
-    private void OnEnable()
-    {
-        ParkingScript.GameWinner += CarInside;
-    }
-    private void OnDisable()
-    {
-        ParkingScript.GameWinner -= CarInside;
-    }
-    public void CarInside(GameObject parkArea)
-    {
-        GameManager.Instance.parkText.ActiveText();
-        if (GameManager.Instance.carController.isParking)
-        {
-            parkArea.GetComponent<BoxCollider>().enabled = false;   
-            GameManager.Instance.LevelCompleted();
-            WinnerPopUp();
-        }
-
-    }
+    
 }
